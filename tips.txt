@@ -1,0 +1,13 @@
+🕵️ 3. Debian/Ubuntu Log Paths (Where to find attackers)
+ 
+Debian/Ubuntu stores logs in very specific places. Open a new tmux window and run tail -f on these files to watch live attacks:
+* Web Attacks (SQLi, LFI, Webshells):
+sudo tail -f /var/log/apache2/access.log
+# OR if using Nginx
+sudo tail -f /var/log/nginx/access.log
+Look for: UNION, ../, eval, or weird .php files being accessed.
+* SSH Brute Force / Sudo Abuse:
+sudo tail -f /var/log/auth.log
+Look for: Failed password for root, sudo: ctf : command not allowed. If you see an enemy IP hammering you, you can ban it.
+* System Errors / Crashes (SLA failures):
+sudo tail -f /var/log/syslog

@@ -1,0 +1,16 @@
+For pwn # Capture traffic on port 1337 (or whatever the challenge port is)
+sudo tcpdump -i any -A port 1337
+
+# Find files modified in the last 10 minutes
+sudo find /var/www/html -mmin -10 -type f
+
+# If you find a weird file like 'upload.php', open it:
+cat /var/www/html/upload.php
+
+# See the history of the user they logged in as
+cat /home/ctf/.bash_history
+cat /root/.bash_history
+
+# Check `/tmp` and `/dev/shm` (where hackers love to hide their scripts)
+ls -la /tmp
+ls -la /dev/shm see rev shell

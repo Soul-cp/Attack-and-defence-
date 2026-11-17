@@ -1,0 +1,34 @@
+🎯 The 3 Most Common Patches You Will Need
+1. Fixing a Buffer Overflow
+If they use gets() or strcpy(), you need to patch it. The easiest way is to find the CALL gets instruction in Ghidra, and replace the CALL opcode (E8) with NOPs (90 90 90 90 90). The program will skip reading the input, preventing the overflow. (Warning: Make sure the program doesn't crash because it expects input later!)
+
+2. Fixing Command Injection (Pwn)
+If the binary does system("ping " + user_input), the attacker can type 127.0.0.1; cat /flag.
+
+Patch: Find the CALL system in the disassembly. Change it to CALL exit or NOP it out. Or, if there's a string like ; or | that gets filtered, you can patch the binary to check for those characters (harder).
+
+3. Patching a Backdoor / Hardcoded Password
+If the code says if (strcmp(input, "secret_backdoor") == 0), just change the string "secret_backdoor" to something long and random in the .rodata section. You can do this by finding the string in rizin (/ secret_backdoor), seeking to it (s 0x...), and writing new bytes (wx password1234).
+
+🔄 How to hot-swap the binary without failing the SLA
+If the binary is currently running under xinetd, socat, or a wrapper script:
+
+DO NOT kill the service.
+
+Patch the binary (binary_new).
+
+Overwrite the old one in the background: mv binary_new ./vulnerable_binary
+
+The SLA checker will connect, hit the new binary, and it will run your patched version!
+
+⚠️ Reality Check for Tomorrow
+If you break the SLA, you lose points every tick. If you leave the vuln open, you only lose points if the enemy team actually exploits it.
+
+Test your patch locally! Before moving it to the live server, run it on your pwnbox:
+
+bash
+./patched_binary
+If it crashes or hangs, restore the backup immediately.
+
+You have Ghidra, Rizin, and Python. If you can reverse it, you can break it or fix it. Get some sleep, and good luck tomorrow!
+
