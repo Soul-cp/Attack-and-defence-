@@ -49,7 +49,10 @@ for flag in flags:
         s.sendall(req.encode())
         print(flag, "->", s.recv(4096).decode(errors="replace").split("\r\n\r\n", 1)[-1].strip())
 PY
+@
 
+bytebandits  
+ihack.co:!vF!hHsqvN-EW76z82
 
 https://ad.i-hack.online/team/login
 
