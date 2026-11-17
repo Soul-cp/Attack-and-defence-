@@ -23,3 +23,8 @@ grep -rnw /var/www/html -e "eval" -e "base64_decode" -e "system(" -e "passthru("
 # 4. See all active network connections (Look for weird ports like 4444 or 1337)
 sudo netstat -tulpn | grep ESTABLISHED
 sudo ss -tupn
+
+
+https://ad.i-hack.online/team/login
+
+e88bb18a9cc04bfaa4885805cc8e4c8931b2ec05f0f8cefe
