@@ -25,6 +25,32 @@ sudo netstat -tulpn | grep ESTABLISHED
 sudo ss -tupn
 
 
+ni script
+
+python3 - <<'PY'
+import json, socket
+
+TOKEN = "[change this token]"
+HOST = "flag.i-hack.online"
+flags = [x.strip() for x in open("flag.txt") if x.strip()]
+
+for flag in flags:
+    body = json.dumps([flag])
+    req = (
+        f"PUT /flags HTTP/1.1\r\n"
+        f"Host: {HOST}\r\n"
+        f"X-Team-Token: {TOKEN}\r\n"
+        f"Content-Type: application/json\r\n"
+        f"Content-Length: {len(body)}\r\n"
+        f"Connection: close\r\n\r\n"
+        f"{body}"
+    )
+    with socket.create_connection((HOST, 80), timeout=10) as s:
+        s.sendall(req.encode())
+        print(flag, "->", s.recv(4096).decode(errors="replace").split("\r\n\r\n", 1)[-1].strip())
+PY
+
+
 https://ad.i-hack.online/team/login
 
 e88bb18a9cc04bfaa4885805cc8e4c8931b2ec05f0f8cefe
